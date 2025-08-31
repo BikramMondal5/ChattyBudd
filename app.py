@@ -4,6 +4,7 @@ from twilio.twiml.messaging_response import MessagingResponse
 from twilio.rest import Client
 import os
 from dotenv import load_dotenv
+from flask import send_from_directory, url_for
 
 # Gemini AI imports
 from google import genai
@@ -79,6 +80,9 @@ def get_gemini_response(user_input):
 import mimetypes
 import base64
 def generate_gemini_image(prompt, file_prefix="generated_image"):
+    # Ensure images directory exists
+    images_dir = os.path.join(os.getcwd(), "images")
+    os.makedirs(images_dir, exist_ok=True)
     gemini_api_key = os.environ.get("GEMINI_API_KEY")
     if not gemini_api_key:
         return None, "AI service unavailable: GEMINI_API_KEY not set."
@@ -111,10 +115,11 @@ def generate_gemini_image(prompt, file_prefix="generated_image"):
             part = chunk.candidates[0].content.parts[0]
             if hasattr(part, "inline_data") and part.inline_data and part.inline_data.data:
                 inline_data = part.inline_data
-                data_buffer = inline_data.data
+                data_buffer = part.inline_data.data
                 file_extension = mimetypes.guess_extension(inline_data.mime_type) or ".png"
                 file_name = f"{file_prefix}_{file_index}{file_extension}"
-                with open(file_name, "wb") as f:
+                file_path = os.path.join(images_dir, file_name)
+                with open(file_path, "wb") as f:
                     f.write(data_buffer)
                 image_filenames.append(file_name)
                 file_index += 1
@@ -145,7 +150,9 @@ def bot():
         else:
             filenames, text_response = generate_gemini_image(prompt)
             if filenames:
-                response.message(f"Here is your image: {filenames[0]}")
+                # Serve the image via Flask static route and send as WhatsApp media
+                image_url = url_for('serve_image', filename=filenames[0], _external=True)
+                response.message().media(image_url)
             if text_response:
                 response.message(text_response)
             elif not filenames:
@@ -155,6 +162,13 @@ def bot():
         response.message(ai_reply)
 
     return str(response)
+
+
+# Route to serve generated images
+@app.route('/images/<path:filename>')
+def serve_image(filename):
+    images_dir = os.path.join(os.getcwd(), "images")
+    return send_from_directory(images_dir, filename)
 
 if __name__ == "__main__":
     print("🚀 Starting Flask app on port 5000...")
