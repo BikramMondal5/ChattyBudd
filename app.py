@@ -75,6 +75,59 @@ def get_gemini_response(user_input):
     except Exception as e:
         return f"AI error: {e}"
 
+# --- Gemini Image Generation function ---
+import mimetypes
+import base64
+def generate_gemini_image(prompt, file_prefix="generated_image"):
+    gemini_api_key = os.environ.get("GEMINI_API_KEY")
+    if not gemini_api_key:
+        return None, "AI service unavailable: GEMINI_API_KEY not set."
+    try:
+        ai_client = genai.Client(api_key=gemini_api_key)
+        model = "gemini-2.0-flash-preview-image-generation"
+        contents = [
+            types.Content(
+                role="user",
+                parts=[types.Part.from_text(text=prompt)],
+            ),
+        ]
+        generate_content_config = types.GenerateContentConfig(
+            response_modalities=["IMAGE", "TEXT"],
+        )
+        file_index = 0
+        image_filenames = []
+        text_response = ""
+        for chunk in ai_client.models.generate_content_stream(
+            model=model,
+            contents=contents,
+            config=generate_content_config,
+        ):
+            if (
+                chunk.candidates is None
+                or chunk.candidates[0].content is None
+                or chunk.candidates[0].content.parts is None
+            ):
+                continue
+            part = chunk.candidates[0].content.parts[0]
+            if hasattr(part, "inline_data") and part.inline_data and part.inline_data.data:
+                inline_data = part.inline_data
+                data_buffer = inline_data.data
+                file_extension = mimetypes.guess_extension(inline_data.mime_type) or ".png"
+                file_name = f"{file_prefix}_{file_index}{file_extension}"
+                with open(file_name, "wb") as f:
+                    f.write(data_buffer)
+                image_filenames.append(file_name)
+                file_index += 1
+            elif hasattr(chunk, "text") and chunk.text:
+                text_response += chunk.text
+        if image_filenames:
+            return image_filenames, text_response.strip()
+        else:
+            return None, text_response.strip() or "Sorry, I couldn't generate an image."
+    except Exception as e:
+        return None, f"AI error: {e}"
+
+
 # --- Main Webhook for handling all incoming messages ---
 @app.route("/", methods=["POST"])
 def bot():
@@ -84,6 +137,19 @@ def bot():
 
     if not user_msg:
         response.message("Hi! 👋 How can I help you today?")
+    elif user_msg.lower().startswith("/image"):
+        # Extract prompt after '/image'
+        prompt = user_msg[6:].strip()
+        if not prompt:
+            response.message("Please provide a description for the image you want me to generate after /image.")
+        else:
+            filenames, text_response = generate_gemini_image(prompt)
+            if filenames:
+                response.message(f"Here is your image: {filenames[0]}")
+            if text_response:
+                response.message(text_response)
+            elif not filenames:
+                response.message("Sorry, I couldn't generate an image.")
     else:
         ai_reply = get_gemini_response(user_msg)
         response.message(ai_reply)
