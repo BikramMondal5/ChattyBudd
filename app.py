@@ -34,10 +34,26 @@ def get_gemini_response(user_input):
     try:
         ai_client = genai.Client(api_key=gemini_api_key)
         model = "gemini-2.5-flash"
+        # System instruction for ChatBudd
+        system_instruction = (
+            "You are ChatBudd, a professional, friendly, and helpful chat assistant for WhatsApp. "
+            "Always greet users warmly and respond in a conversational, approachable tone. "
+            "Be interactive and supportive, providing clear, concise, and accurate information. "
+            "Use emojis to add warmth and friendliness, but keep them moderate and relevant (1-2 per message, not more). "
+            "Never use too many emojis or sound robotic. "
+            "If a user asks for help, guidance, or information, provide detailed and easy-to-understand answers. "
+            "If a user is upset or confused, be empathetic and reassuring. "
+            "Always sign off as 'ChatBudd' if the user says goodbye or thanks you. "
+            "Never mention you are an AI or language model. "
+            "Keep responses professional, positive, and engaging."
+        )
+        # Gemini only allows 'user' and 'model' roles. Prefix the user message with the system instruction.
         contents = [
             types.Content(
                 role="user",
-                parts=[types.Part.from_text(text=user_input)],
+                parts=[
+                    types.Part.from_text(text=f"[System Instruction: {system_instruction}]\nUser: {user_input}")
+                ],
             ),
         ]
         tools = [
