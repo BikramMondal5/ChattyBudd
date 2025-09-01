@@ -171,6 +171,4 @@ def serve_image(filename):
     return send_from_directory(images_dir, filename)
 
 if __name__ == "__main__":
-    print("🚀 Starting Flask app on port 5000...")
-    # For production, use a proper WSGI server like Gunicorn or Waitress
-    app.run(port=5000, debug=False)
+    app.run()
