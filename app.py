@@ -1,10 +1,17 @@
-# Import necessary libraries
 from flask import Flask, request
 from twilio.twiml.messaging_response import MessagingResponse
 from twilio.rest import Client
 import os
 from dotenv import load_dotenv
 from flask import send_from_directory, url_for
+
+# Suppress Pydantic warnings
+import warnings
+try:
+    from pydantic.warnings import PydanticWarning
+    warnings.filterwarnings("ignore", category=PydanticWarning)
+except ImportError:
+    pass
 
 # Gemini AI imports
 from google import genai
