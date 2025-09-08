@@ -22,8 +22,8 @@ NanoBudd is an interactive WhatsApp bot powered by Google's Gemini Nano banana m
 
 1. **Clone the repository:**
    ```powershell
-   git clone https://github.com/BikramMondal5/ChattyBudd.git
-   cd ChattyBudd
+   git clone https://github.com/BikramMondal5/NanoBudd.git
+   cd NanoBudd
    ```
 2. **Install dependencies:**
    ```powershell
