@@ -1,4 +1,4 @@
-# 🤖🧠 NanoBudd - "Having Trouble? I'm Here!"
+# 🧠 NanoBudd - "Having Trouble? I'm Here!" 😊
 
 NanoBudd is an interactive WhatsApp bot powered by Google's Gemini Nano banana model. It allows you to have natural conversations, generate and edit images using Google's Nano banana, and get coding help right from your WhatsApp. The bot responds to plain English text and provides helpful, context-aware responses.
 
