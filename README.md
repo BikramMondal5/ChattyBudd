@@ -1,12 +1,12 @@
 # 🤖🧠 ChattyBudd
 
-ChattyBudd is an interactive WhatsApp bot powered by Google's Gemini AI. It allows you to have natural conversations, generate images, and get coding help right from your WhatsApp. The bot responds to plain English text and provides helpful, context-aware responses.
+ChattyBudd is an interactive WhatsApp bot powered by Google's Gemini AI. It allows you to have natural conversations, generate and edit images using Google's Nano banana, and get coding help right from your WhatsApp. The bot responds to plain English text and provides helpful, context-aware responses.
 
 ## 🌟 Features
 - 💬 Real-time AI-powered chat via WhatsApp
 - 🖼️ Image generation (use /image command)
 - 💻 Code generation capabilities
-- 🧠 Intelligent and context-aware responses using Gemini AI
+- 🧠 Intelligent and context-aware responses using Gemini API
 - 🌐 Google Search integration
 - 💬 Accessible directly through WhatsApp
 
@@ -14,7 +14,7 @@ ChattyBudd is an interactive WhatsApp bot powered by Google's Gemini AI. It allo
 - Python 3
 - Flask (for webhook server)
 - Twilio (for WhatsApp integration)
-- Google Gemini AI (for chat, code, and image generation)
+- Google Gemini API (for chat, code, and image generation)
 - Gemini 2.5 Flash (for conversations)
 - Gemini 2.0 Flash Image Generation
 
@@ -53,13 +53,8 @@ ChattyBudd is an interactive WhatsApp bot powered by Google's Gemini AI. It allo
    - For image generation, send: `/image [your description]`
 
 ## 🤝 Contribution
-
-Contributions are welcome! To contribute:
-1. Fork the repository
-2. Create a new branch (`git checkout -b feature/your-feature`)
-3. Commit your changes
-4. Push to the branch (`git push origin feature/your-feature`)
-5. Open a Pull Request
+**Got ideas? Found a bug? 🐞**
+- Open an issue or submit a pull request — contributions are always welcome!
 
 ## 📜 License
 
