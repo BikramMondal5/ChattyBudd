@@ -1,6 +1,6 @@
-# 🤖🧠 ChattyBudd
+# 🤖🧠 NanoBudd
 
-ChattyBudd is an interactive WhatsApp bot powered by Google's Gemini AI. It allows you to have natural conversations, generate and edit images using Google's Nano banana, and get coding help right from your WhatsApp. The bot responds to plain English text and provides helpful, context-aware responses.
+NanoBudd is an interactive WhatsApp bot powered by Google's Gemini Nano banana model. It allows you to have natural conversations, generate and edit images using Google's Nano banana, and get coding help right from your WhatsApp. The bot responds to plain English text and provides helpful, context-aware responses.
 
 ## 🌟 Features
 - 💬 Real-time AI-powered chat via WhatsApp
@@ -53,9 +53,9 @@ ChattyBudd is an interactive WhatsApp bot powered by Google's Gemini AI. It allo
    - For image generation, send: `/image [your description]`
 
 ## 🤝 Contribution
-**Got ideas? Found a bug? 🐞**
+**Got ideas? or Found a bug? 🐞**
 - Open an issue or submit a pull request — contributions are always welcome!
 
 ## 📜 License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the `MIT License`.
