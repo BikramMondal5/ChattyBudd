@@ -1,20 +1,22 @@
 # 🤖🧠 ChattyBudd
 
- ChattyBudd is an interactive AI-powered chatbot application designed to provide engaging conversations and helpful responses. Whether you're looking for a friendly chat or need assistance, ChattyBudd is here to help!
+ChattyBudd is an interactive WhatsApp bot powered by Google's Gemini AI. It allows you to have natural conversations, generate images, and get coding help right from your WhatsApp. The bot responds to plain English text and provides helpful, context-aware responses.
 
 ## 🌟 Features
-- 💬 Real-time AI-powered chat
-- 🖼️ Image generation and sharing
+- 💬 Real-time AI-powered chat via WhatsApp
+- 🖼️ Image generation (use /image command)
 - 💻 Code generation capabilities
-- 🧠 Intelligent and context-aware responses
-- 🖥️ Simple and intuitive user interface
-- 📂 Save and view generated images
+- 🧠 Intelligent and context-aware responses using Gemini AI
+- 🌐 Google Search integration
+- 💬 Accessible directly through WhatsApp
 
 ## 🛠️ Technologies Used
 - Python 3
-- Flask (for web framework)
-- OpenAI API (for AI chat and image generation)
-- HTML/CSS/JavaScript (for frontend)
+- Flask (for webhook server)
+- Twilio (for WhatsApp integration)
+- Google Gemini AI (for chat, code, and image generation)
+- Gemini 2.5 Flash (for conversations)
+- Gemini 2.0 Flash Image Generation
 
 ## ⚙️ Installation
 
@@ -27,17 +29,28 @@
    ```powershell
    pip install -r requirements.txt
    ```
-3. **Set up API keys:**
-   - Add your Gemini API key as an environment variable or in the appropriate config file.
+3. **Set up environment variables:**
+   Create a `.env` file with the following:
+   ```
+   TWILIO_ACCOUNT_SID=your_twilio_sid
+   TWILIO_AUTH_TOKEN=your_twilio_auth_token
+   TWILIO_WHATSAPP_NUMBER=your_twilio_whatsapp_number
+   GEMINI_API_KEY=your_gemini_api_key
+   ```
 
 ## 🚀 How to Use
 
-1. Start the application:
+1. **Start the application:**
    ```powershell
    python app.py
    ```
-2. Open your browser and go to `http://localhost:5000`
-3. Start chatting and enjoy the features!
+2. **Set up Twilio webhook:**
+   - Make your server publicly accessible (using ngrok or similar)
+   - Configure your Twilio WhatsApp Sandbox to point to your webhook URL
+   
+3. **Chat via WhatsApp:**
+   - Send messages to your configured Twilio WhatsApp number
+   - For image generation, send: `/image [your description]`
 
 ## 🤝 Contribution
 
